@@ -1,0 +1,41 @@
+{
+  "mockpreview": {
+    "mockUri": "/sap/opu/odata/sap/EPM_REF_APPS_PROD_MAN_SRV",
+    "loadJSONFiles": true,
+    "loadCustomRequests": true,
+    "metadataFilePath": "../localService/metadata.xml",
+    "mockRequestsFilePath": "../localService/MockRequests.js"
+  },
+  "basevalidator": {
+    "validators": [
+      {
+        "validatorID": "fioriJsValidator",
+        "configuration": {
+          "rules": {},
+          "additionalRuleMetadata": {}
+        }
+      },
+      {
+        "validatorID": "fioriXmlAnalysis"
+      }
+    ],
+    "services": {
+      "js": "fioriJsValidator",
+      "xml": "fioriXmlAnalysis"
+    }
+  },
+  "generation": [
+    {
+      "templateId": "fiorireferenceapps.manageProducts",
+      "templateVersion": "2.0.14",
+      "dateTimeStamp": "Wed, 15 Aug 2018 18:49:37 GMT"
+    }
+  ],
+  "translation": {
+    "translationDomain": "",
+    "supportedLanguages": "",
+    "defaultLanguage": "",
+    "defaultI18NPropertyFile": "",
+    "resourceModelName": ""
+  }
+}

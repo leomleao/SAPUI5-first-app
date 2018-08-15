@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:footerbar="sap.ushell.ui.footerbar" >
+  <ActionSheet id="shareSheet" showCancelButton="true" placement="Top">
+    <buttons>
+        <Button id="emailButton" icon="sap-icon://email" text="{i18n>xbut.email}" press="onEmailPressed" enabled="{viewProperties>/dataLoaded}" />
+        <footerbar:AddBookmarkButton id="bookmarkButton" appData="{path:'Name', formatter: '.formatter.appDataForTile'}" />
+      </buttons>
+  </ActionSheet>
+</core:FragmentDefinition>

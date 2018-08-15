@@ -1,0 +1,1 @@
+SAP Fiori Reference Application, demonstrating maintaining products on the EPM model (master-detail application) 

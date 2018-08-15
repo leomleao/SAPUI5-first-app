@@ -1,0 +1,139 @@
+<mvc:View
+	xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc"
+	controllerName="nw.epm.refapps.ext.prod.manage.controller.ProductEdit">
+	<Page id="page" showNavButton="{device>/system/phone}" title="{path: 'IsNewProduct', formatter: '.formatter.formatEditTitle'}" navButtonPress="onNavButtonPress">
+		<content>
+			<!-- Form for Product Information -->
+			<f:SimpleForm id="productInformationForm" class="sapUiForceWidthAuto sapUiResponsiveMargin"
+				minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+				labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1" columnsL="7" columnsM="7"
+				title="{i18n>xtit.generalInfo}">
+				<f:content>
+					<Label id="nameLabel" text="{/#Product/Name/@sap:label}" required="true"/>
+					<Input id="productNameInput"
+						type="Text" valueStateText="{i18n>ymsg.errorName}"
+						maxLength="{path: '/#Product/Name/@maxLength', formatter: 'Number'}"
+						change="onInputChange"
+						value="{path: 'Name'}"/>
+					<Label id="priceLabel" 
+							text="{parts:[{path: 'i18n>xfld.textConcat'}, {path: '/#Product/Price/@sap:label'}, {path: '/#Product/CurrencyCode/@sap:label'}], 
+        							formatter: 'jQuery.sap.formatMessage'}" required="true"/>
+					<Input id="priceInput" valueStateText="{i18n>ymsg.errorPrice}"
+						change="onNumberChange"
+						value="{Price}" type="Text"
+						textAlign="Right" />
+					<ComboBox id="currencyBox" valueStateText="{i18n>ymsg.errorCurrency}" selectedKey="{CurrencyCode}"
+						items="{path: '/Currencies', length: '300'}"  selectionChange="onInputChange">
+						<core:Item id="currencyItem" key="{Code}" text="{Code}" />
+					</ComboBox>
+					<Label id="categoryLabel" text="{/#Product/MainCategoryName/@sap:label}" required="true"></Label>
+					<ComboBox id="categoryBox" 
+					    valueStateText="{i18n>ymsg.errorMainCategory}"
+						selectionChange="onCategoryChange"
+						selectedKey="{MainCategoryId}"
+						items="{path: '/MainCategories'}">
+						<core:Item id="categoryItem" key="{Id}" text="{Name}" />
+					</ComboBox>
+					<Label id="emptyLabel"/>
+					<Label id="subcategoryLabel" text="{/#Product/SubCategoryName/@sap:label}" required="true"/>
+					<ComboBox id="subcategoryBox"
+						valueStateText="{i18n>ymsg.errorSubCategory}"
+						selectionChange="onSubcategoryChange"
+						selectedKey="{SubCategoryId}"
+						items="{path: '/SubCategories', sorter: {path: 'Name', descending: false}}">
+						<core:Item id="subcategoryItem" key="{Id}" text="{Name}" />
+					</ComboBox>
+					<Label id="productIdLabel" text="{/#Product/Id/@sap:label}"/>
+					<Input id="productIdInput" editable="false" value="{Id}"/>
+					<Label id="descriptionLabel" text="{/#Product/Description/@sap:label}" required="true"/>
+					<TextArea id="descriptionArea" 
+					    valueStateText="{i18n>ymsg.errorDescription}"
+						maxLength="{path: '/#Product/Description/@maxLength', formatter: 'Number'}"
+						change="onInputChange"
+						value="{path: 'Description'}"/>
+					<Label id="supplierLabel" text="{/#Product/SupplierName/@sap:label}" required="true"/>
+					<Input id="supplierInput" 
+					    type="Text" valueStateText="{i18n>ymsg.errorSupplier}"
+						maxLength="{path: '/#Product/SupplierName/@maxLength', formatter: 'Number'}"
+						change="onInputChange"
+						showSuggestion="true" suggest="suggestMethod" maxSuggestionWidth="600px" filterSuggests="false"
+						value="{path: 'SupplierName'}"/>
+					<Label id="placeHolderLabel"/>
+				</f:content>
+			</f:SimpleForm>
+
+			<!-- Form for Physical Properties -->
+			<f:SimpleForm id="physicalPropertiesForm" class="sapUiForceWidthAuto sapUiResponsiveMargin"
+				minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+				labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1" columnsL="7" columnsM="7" title="{i18n>xtit.techData}">
+				<f:content>
+					<Label id="unitOfMeasureLabel" text="{/#Product/QuantityUnit/@sap:label}" required="true"/>
+					<ComboBox id="unitOfMeasureBox" 
+					    valueStateText="{i18n>ymsg.errorQuantityUnit}" selectedKey="{QuantityUnit}"
+						change="onInputChange"
+						items="{path: '/QuantityUnits', sorter: {path: 'Shorttext', descending: false}}">
+						<core:Item id= "unitOfMeasureItem" key="{Unit}" text="{Shorttext}" />
+					</ComboBox>
+					<Label id="heightLabel" 
+						text="{parts:[{path: 'i18n>xfld.textConcat'}, {path: '/#Product/DimensionHeight/@sap:label'}, {path: 'i18n>xfld.uoM'}], 
+        							formatter: 'jQuery.sap.formatMessage'}"/>
+					<Input id="heightInput" type="Text"
+						change="onNumberChange"
+						value="{DimensionHeight}"
+						textAlign="Right"/>
+					<Select id="heightUomSelect" 
+					    selectedKey="{DimensionUnit}" items="{path: '/DimensionUnits'}" change="onSelectChange">
+						<core:Item id="heightUomItem" key="{Unit}" text="{Text}" />
+					</Select>
+					<Label id="widthLabel" 
+						text="{parts:[{path: 'i18n>xfld.textConcat'}, {path: '/#Product/DimensionWidth/@sap:label'}, {path: 'i18n>xfld.uoM'}], 
+        							formatter: 'jQuery.sap.formatMessage'}"/>
+					<Input id="widthInput" type="Text"
+						change="onNumberChange"
+						value="{DimensionWidth}"
+						textAlign="Right"/>
+					<Select id="widthUomSelect" 
+					    selectedKey="{DimensionUnit}" items="{path: '/DimensionUnits'}" change="onSelectChange">
+						<core:Item id="widthUomItem" key="{Unit}" text="{Text}" />
+					</Select>
+					<Label id="lengthLabel" 							
+						text="{parts:[{path: 'i18n>xfld.textConcat'}, {path: '/#Product/DimensionDepth/@sap:label'}, {path: 'i18n>xfld.uoM'}], 
+        							formatter: 'jQuery.sap.formatMessage'}" />
+					<Input id="lengthInput" type="Text"
+						change="onNumberChange"
+						value="{DimensionDepth}" 
+						textAlign="Right"/>
+					<Select id="lengthUomSelect" 
+					    selectedKey="{DimensionUnit}" items="{path: '/DimensionUnits'}" change="onSelectChange">
+						<core:Item id="lengthUomItem" key="{Unit}" text="{Text}" />
+					</Select>
+					<Label id="weightLabel" 
+						text="{parts:[{path: 'i18n>xfld.textConcat'}, {path: '/#Product/WeightMeasure/@sap:label'}, {path: 'i18n>xfld.uoM'}], 
+        							formatter: 'jQuery.sap.formatMessage'}" />
+					<Input id="weightInput" type="Text"
+				    	change="onNumberChange" 
+				    	value="{WeightMeasure}"
+					    textAlign="Right"/>
+					<Select id="weightUomSelect"
+						selectedKey="{WeightUnit}" items="{path: '/WeightUnits'}" change="onSelectChange">
+						<core:Item id="weightUomItem" key="{Unit}" text="{Text}" />
+					</Select>
+				</f:content>
+			</f:SimpleForm>
+
+			<!-- Sub-View for Uploading/Removing Images -->
+			<mvc:XMLView viewName="nw.epm.refapps.ext.prod.manage.view.ProductDraftUploadImages" id="View_ImageUpload" />
+			
+			<!--Allow adding fields at the bottom of the edit screen -->
+			<core:ExtensionPoint name="extensionBottomOfEditScreen"/>
+		</content>
+		<footer>
+	    	<OverflowToolbar id="footerToolbar">
+				<ToolbarSpacer id="footerBeginSpacer" />
+				<Button id="saveButton" text="{i18n>xbut.save}" press="onSavePressed"/>
+				<Button id="cancelButton" text="{i18n>xbut.cancel}" press="onCancelPressed"/>
+				<Button id="shareButton" icon="sap-icon://action"  press="onSharePressed"/>
+			</OverflowToolbar>
+		</footer>		
+	</Page>
+</mvc:View>
